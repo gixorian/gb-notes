@@ -8,8 +8,8 @@ import Account from './pages/Account'
 import './App.css'
 
 export default function App() {
-
   return (
+    // Routing set up for the application
     <Routes>
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
