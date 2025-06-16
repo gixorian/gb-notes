@@ -1,0 +1,21 @@
+#root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+h1 {
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+  text-align: center;
+  color: yellowgreen;
+}
+
+h2 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
