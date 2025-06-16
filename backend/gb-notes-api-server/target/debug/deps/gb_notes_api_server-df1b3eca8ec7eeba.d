@@ -1,0 +1,5 @@
+/home/goran/projects/fullstack-dev/gb-notes/backend/gb-notes-api-server/target/debug/deps/libgb_notes_api_server-df1b3eca8ec7eeba.rmeta: src/main.rs
+
+/home/goran/projects/fullstack-dev/gb-notes/backend/gb-notes-api-server/target/debug/deps/gb_notes_api_server-df1b3eca8ec7eeba.d: src/main.rs
+
+src/main.rs:
