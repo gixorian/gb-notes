@@ -25,28 +25,24 @@ textarea {
   font-size: 1rem;
 }
 
-.note-saved {
-  display: flex;
-  background-color: Red;
-}
-
-.note-saved p {
-  color: white;
-  font-weight: bold;
-  font-size: 1.5rem;
-  margin: 0 auto;
-}
-
-.note-error {
+.note {
   display: flex;
   width: 80%;
   justify-content: center;
   align-items: center;
   height: 3rem;
-  background-color: rgba(200, 25, 50, 0.2);
-  border: 3px solid rgba(200, 0, 50, 0.6);
   border-radius: 10px;
   margin-top: 3rem;
   font-weight: bold;
   font-size: 1.5rem;
+}
+
+.note.saved {
+  background-color: rgba(75, 235, 100, 0.3);
+  border: 3px solid rgba(48, 191, 88, 0.6);
+}
+
+.note.error {
+  background-color: rgba(200, 25, 50, 0.3);
+  border: 3px solid rgba(200, 0, 50, 0.6);
 }

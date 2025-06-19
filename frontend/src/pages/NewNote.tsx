@@ -59,8 +59,8 @@ function NewNote() {
               {/* {status === 'saving' ? 'Saving...' : "Save"} */}
               Save
             </button>
-            {status === 'saved' && <div className='note-saved'>Note saved!</div>}
-            {status === 'error' && <div className='note-error'>Error saving the note!</div>}
+            {status === 'saved' && <div className='note saved'>Note saved!</div>}
+            {status === 'error' && <div className='note error'>Error saving the note!</div>}
           </div>
         </center>
       </form>
