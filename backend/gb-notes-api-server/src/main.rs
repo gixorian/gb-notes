@@ -1,15 +1,18 @@
+use std::sync::Arc;
+
+use crate::models::note::Note;
 use axum::{Router, routing::get};
 
-use crate::handlers::new_note_handler::create_note_handler;
 mod models {
+    pub mod database;
     pub mod note;
-}
-mod handlers {
-    pub mod new_note_handler;
 }
 
 #[tokio::main]
-async fn main() {
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let database_url = "sqlite:///home/goran/projects/fullstack-dev/gb-notes/backend/notes.db"; // Use the path variable if needed
+    let db = Arc::new(models::database::Database::new(database_url).await?);
+
     let app = Router::new()
         .route("/", get(|| async { "Welcome to the GB Notes API Server!" }))
         .route("/health", get(|| async { "Health check: OK" }))
@@ -22,9 +25,12 @@ async fn main() {
         .route("/notes", get(|| async { "Notes endpoint" }))
         .route(
             "/new-note",
-            get(|| async { "New note endpoint" }).post(create_note_handler),
-        );
+            get(|| async { "New note endpoint" }).post(Note::create_note_handler),
+        )
+        .with_state(db);
 
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await?;
     axum::serve(listener, app).await.unwrap();
+
+    Ok(())
 }

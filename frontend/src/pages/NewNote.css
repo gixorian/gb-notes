@@ -25,7 +25,11 @@ textarea {
   font-size: 1rem;
 }
 
-.note {
+.notification {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  pinter-events: none;
+
   display: flex;
   width: 80%;
   justify-content: center;
@@ -35,14 +39,19 @@ textarea {
   margin-top: 3rem;
   font-weight: bold;
   font-size: 1.5rem;
+  
 }
 
-.note.saved {
+.notification.show {
+  opacity: 1;
+}
+
+.notification.saved {
   background-color: rgba(75, 235, 100, 0.3);
   border: 3px solid rgba(48, 191, 88, 0.6);
 }
 
-.note.error {
+.notification.error {
   background-color: rgba(200, 25, 50, 0.3);
   border: 3px solid rgba(200, 0, 50, 0.6);
 }

@@ -1,11 +1,12 @@
 import './NewNote.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function NewNote() {
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [status, setStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+  const [showNotification, setShowNotification] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,6 +30,24 @@ function NewNote() {
       setStatus('error');
     }
   };
+
+  useEffect(() => {
+    if (status === 'saved' || status === 'error') {
+      setShowNotification(true);
+      const hideTimeout = setTimeout(() => {
+        setShowNotification(false);
+      }, 3000); // Show notification for 3 seconds
+
+      const removeTimeout = setTimeout(() => {
+        setStatus('idle'); // Reset status after notification
+      }, 3500); // Reset status after 3.5 seconds
+
+      return () => {
+        clearTimeout(hideTimeout);
+        clearTimeout(removeTimeout);
+      };
+    }
+  }, [status]);
 
   return (
     <>
@@ -59,8 +78,8 @@ function NewNote() {
               {/* {status === 'saving' ? 'Saving...' : "Save"} */}
               Save
             </button>
-            {status === 'saved' && <div className='note saved'>Note saved!</div>}
-            {status === 'error' && <div className='note error'>Error saving the note!</div>}
+            {status === 'saved' && <div className={`notification saved ${showNotification ? 'show' : ''}`}>Note saved!</div>}
+            {status === 'error' && <div className={`notification error ${showNotification ? 'show' : ''}`}>Error saving the note!</div>}
           </div>
         </center>
       </form>
