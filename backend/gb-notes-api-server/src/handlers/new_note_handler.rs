@@ -1,4 +1,4 @@
-use axum::{Router, extract::Json, http::StatusCode, routing::post};
+use axum::{extract::Json, http::StatusCode};
 use serde::Serialize;
 
 use crate::models::note::Note;
@@ -9,22 +9,23 @@ pub struct ApiResponse {
     id: u64,
 }
 
-pub async fn create_note_handler(Json(payload): Json<Note>) -> (StatusCode, Json<ApiResponse>) {
-    let Note {
-        id: _,
-        title,
-        content,
-    } = payload;
-    println!("Received note: Title: {}, Content: {}", title, content);
+pub async fn create_note_handler(
+    Json(mut new_note): Json<Note>,
+) -> (StatusCode, Json<ApiResponse>) {
+    new_note.set_id(1); // Set the ID to a new incremental value
+    println!(
+        "Received note: Title: {}, Content: {}",
+        new_note.get_title(),
+        new_note.get_content()
+    );
 
     // TODO: Get an incremental ID from the database
-    let new_id = 1;
 
     (
         StatusCode::CREATED,
         Json(ApiResponse {
             success: true,
-            id: new_id,
+            id: new_note.get_id(),
         }),
     )
 }

@@ -11,36 +11,20 @@ mod handlers {
 #[tokio::main]
 async fn main() {
     let app = Router::new()
-        .route("/", get(get_root))
-        .route("/health", get(get_health))
-        .route("/help", get(get_help))
-        .route("/notes", get(get_notes))
-        .route("/new-note", get(get_new_note).post(create_note_handler));
+        .route("/", get(|| async { "Welcome to the GB Notes API Server!" }))
+        .route("/health", get(|| async { "Health check: OK" }))
+        .route(
+            "/help",
+            get(|| async {
+                "API Help: Use /api/notes to get notes and /api/new-note to create a new note."
+            }),
+        )
+        .route("/notes", get(|| async { "Notes endpoint" }))
+        .route(
+            "/new-note",
+            get(|| async { "New note endpoint" }).post(create_note_handler),
+        );
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
     axum::serve(listener, app).await.unwrap();
-}
-
-async fn post_new_note() -> &'static str {
-    "New note created"
-}
-
-async fn get_root() -> &'static str {
-    "Welcome to the GB Notes API Server!"
-}
-
-async fn get_health() -> &'static str {
-    "Health check: OK"
-}
-
-async fn get_help() -> &'static str {
-    "API Help: Use /api/notes to get notes and /api/new-note to create a new note."
-}
-
-async fn get_notes() -> &'static str {
-    "Notes endpoint"
-}
-
-async fn get_new_note() -> &'static str {
-    "New note endpoint"
 }
