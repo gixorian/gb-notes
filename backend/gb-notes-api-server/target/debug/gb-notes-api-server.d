@@ -1,1 +1,0 @@
-/home/goran/projects/fullstack-dev/gb-notes/backend/gb-notes-api-server/target/debug/gb-notes-api-server: /home/goran/projects/fullstack-dev/gb-notes/backend/gb-notes-api-server/src/main.rs /home/goran/projects/fullstack-dev/gb-notes/backend/gb-notes-api-server/src/models/database.rs /home/goran/projects/fullstack-dev/gb-notes/backend/gb-notes-api-server/src/models/note.rs

@@ -1,2 +1,0 @@
-impl Future<Output = (StatusCode, axum::Json<note::ApiResponse>)>
-impl Future<Output = (StatusCode, axum::Json<note::ApiResponse>)>: Handler<_, _>
