@@ -1,7 +1,6 @@
-use std::sync::Arc;
-
-use crate::models::note::Note;
+use crate::models::note::{Note, get_notes};
 use axum::{Router, routing::get};
+use std::sync::Arc;
 
 mod models {
     pub mod database;
@@ -22,7 +21,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 "API Help: Use /api/notes to get notes and /api/new-note to create a new note."
             }),
         )
-        .route("/notes", get(|| async { "Notes endpoint" }))
+        .route("/notes", get(get_notes))
         .route(
             "/new-note",
             get(|| async { "New note endpoint" }).post(Note::create_note_handler),

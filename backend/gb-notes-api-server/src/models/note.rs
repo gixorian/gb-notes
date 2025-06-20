@@ -1,8 +1,7 @@
-use std::sync::Arc;
-
 use axum::{Json, extract::State, http::StatusCode};
 use serde::{Deserialize, Serialize};
 use sqlx::FromRow;
+use std::sync::Arc;
 
 use crate::models::database::Database;
 
@@ -12,6 +11,8 @@ pub struct Note {
     id: u64,
     title: String,
     content: String,
+    #[serde(default)]
+    created_at: String,
 }
 
 #[derive(Serialize)]
@@ -20,8 +21,8 @@ pub struct ApiResponse {
     id: u64,
 }
 
-async fn _get_notes(State(db): State<Arc<Database>>) -> Json<Vec<Note>> {
-    let notes = sqlx::query_as::<_, Note>("SELECT id, title, content FROM notes")
+pub async fn get_notes(State(db): State<Arc<Database>>) -> Json<Vec<Note>> {
+    let notes = sqlx::query_as::<_, Note>("SELECT id, title, content, created_at FROM notes")
         .fetch_all(&db.pool)
         .await
         .unwrap();
@@ -43,15 +44,6 @@ impl Note {
         .unwrap()
         .0;
 
-        println!(
-            "Received note {}: Title: {}, Content: {}",
-            id,
-            new_note.get_title(),
-            new_note.get_content()
-        );
-
-        // TODO: Get an incremental ID from the database
-
         (
             StatusCode::CREATED,
             Json(ApiResponse {
@@ -68,11 +60,11 @@ impl Note {
         self.id
     }
 
-    pub fn get_title(&self) -> &str {
+    pub fn _get_title(&self) -> &str {
         &self.title
     }
 
-    pub fn get_content(&self) -> &str {
+    pub fn _get_content(&self) -> &str {
         &self.content
     }
 }
